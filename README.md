@@ -1,2 +1,2 @@
 # nest-microservicee
-desc
+Microservice in NestJS using Typescript, MongoDB, Docker and RabbitMQ
