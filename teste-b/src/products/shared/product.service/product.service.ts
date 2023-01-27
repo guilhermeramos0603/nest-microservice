@@ -1,0 +1,28 @@
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { ProductApiB } from '../product/product';
+
+@Injectable()
+export class ProductApiBService {
+    constructor(@InjectModel('ProductApiB') private readonly productApiBModel: Model<ProductApiB>) { }
+
+    async create(data: ProductApiB) {
+        const createdProduct = new this.productApiBModel(data)
+        return await createdProduct.save()
+    }
+
+    async dataReceived(data: ProductApiB) {
+        const find = await this.getAll(data.name)
+        if (find.length == 0) {
+            this.create(data)
+        }
+        else {
+            return find
+        }
+    }
+
+    async getAll(name: string): Promise<ProductApiB[]> {
+        return this.productApiBModel.find({ name: name }).exec()
+    }
+}
