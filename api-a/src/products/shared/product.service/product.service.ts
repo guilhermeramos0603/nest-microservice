@@ -2,6 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { ProductApiA } from '../product/product';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { createMessageChannel } from 'src/rabbitmq/rabbitmq.service';
 
 @Injectable()
 export class ProductApiAService {
@@ -24,10 +25,14 @@ export class ProductApiAService {
     }
 
     async create(data: ProductApiA) {
-        const allData = await this.getByName(data.name)
-        if (allData) {
-            const validateObj = this.validatorData(data)
-            if (validateObj) {
+        const validateObj = this.validatorData(data)
+        if (validateObj) {
+            const allData = await this.getByName(data.name)
+            if (allData) {
+                const dataJson = JSON.stringify(data)
+                const messageChannel = await createMessageChannel()
+                messageChannel.sendToQueue(process.env.QUEUE_NAME, Buffer.from(dataJson))
+                console.log('Data enqueued')
                 const createdProduct = new this.productApiAModel(data)
                 return await createdProduct.save()
             }

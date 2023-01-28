@@ -13,13 +13,16 @@ export class ProductApiBService {
     }
 
     async dataReceived(data: ProductApiB) {
-        const find = await this.getAll(data.name)
-        if (find.length == 0) {
-            this.create(data)
-        }
-        else {
-            return find
-        }
+        console.log('Data received', data)
+        // const find = await this.getAll(data.name)
+        // if (find.length == 0) {
+        //     console.log('Create product in API B', data)
+        //     await this.create(data)
+        // }
+        // else {
+        //     console.log('Product already exist: ', find)
+        //     return find
+        // }
     }
 
     async getAll(name: string): Promise<ProductApiB[]> {
