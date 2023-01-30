@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import ReadMessageChannel from './rabbitmq/rabbitmq.service';
+import { ReadMessageChannel } from './rabbitmq/rabbitmq.service';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);

@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { Channel, connect } from "amqplib";
 import { config } from "dotenv";
 import { ProductApiBService } from "src/products/shared/product.service/product.service";
@@ -5,7 +6,8 @@ import { ProductApiB } from "src/products/shared/product/product";
 
 config()
 
-export default class ReadMessageChannel {
+@Injectable()
+export class ReadMessageChannel {
     private _channel: Channel
     private _service: ProductApiBService
 
@@ -29,7 +31,7 @@ export default class ReadMessageChannel {
                 const obj = JSON.parse(msg.content.toString())
                 this._channel.ack(msg)
                 const product: ProductApiB = obj
-
+                console.log('Message read: ', product)
                 this._service.dataReceived(product)
             })
             console.log('Product consumer started')

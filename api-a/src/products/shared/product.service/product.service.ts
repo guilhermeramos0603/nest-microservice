@@ -32,7 +32,7 @@ export class ProductApiAService {
                 const dataJson = JSON.stringify(data)
                 const messageChannel = await createMessageChannel()
                 messageChannel.sendToQueue(process.env.QUEUE_NAME, Buffer.from(dataJson))
-                console.log('Data enqueued')
+                console.log('Data enqueued', dataJson)
                 const createdProduct = new this.productApiAModel(data)
                 return await createdProduct.save()
             }

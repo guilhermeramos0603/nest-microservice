@@ -10,7 +10,6 @@ export class ProductsApiBController {
 
     @Get(':name')
     async getAll(@Param('name') name: string): Promise<ProductApiB[]> {
-        console.log('NAME', name)
         return this.productApiBService.getAll(name)
     }
 }
