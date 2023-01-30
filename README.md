@@ -71,11 +71,11 @@ The request will search the database and if not found, it will create a new prod
   POST http://localhost:2000/products
 ```
 It must contain a JSON body:
-| Parâmetro   | Tipo       | Descrição                           |
+| Parameter   | Type       | Description                           |
 | :---------- | :--------- | :---------------------------------- |
-| `name` | `string` | **Obrigatório**. Nome do produto|
-| `description` | `string` | Descrição do produto|
-| `value` | `number` | **Obrigatório**. Valor do produto|
+| `name` | `string` | **Required**. Product name|
+| `description` | `string` | Product description|
+| `value` | `number` | **Required**. Product value|
 
 ### API-B
 The request will search the database for all products based on a name passed in the parameter and will return paged.
